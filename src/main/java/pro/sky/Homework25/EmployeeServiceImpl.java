@@ -25,10 +25,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (employees.size() >= SIZE) {
             throw new EmployeeStorageIsFullException("Превышен лимит количества сотрудников в фирме");
         }
-        for (Employee currentEmployee : employees) {
-            if (currentEmployee.equals(employee)) {
-                throw new EmployeeAlreadyAddedException("Уже есть такой сотрудник");
-            }
+        if (employees.contains(employee)) {
+            throw new EmployeeAlreadyAddedException("Уже есть такой сотрудник");
         }
         employees.add(employee);
         return employee.toString();
@@ -51,10 +49,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     public String findEmployee(String firstName, String lastName) {
         Employee employee = new Employee(firstName, lastName);
 
-        for (Employee currentEmployee : employees) {
-            if (currentEmployee.equals(employee)) {
-                return currentEmployee.toString();
-            }
+        if (employees.contains(employee)) {
+            return employee.toString();
         }
         throw new EmployeeNotFoundException("Сотрудник не найден");
     }
